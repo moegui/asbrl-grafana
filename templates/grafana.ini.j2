@@ -70,12 +70,12 @@ root_url = {{ROOT_URL}}
 # as separate properties or as on string using the url properties.
 
 # Either "mysql", "postgres" or "sqlite3", it's your choice
-;type = sqlite3
-;host = 127.0.0.1:3306
-;name = grafana
-;user = root
+type = {{DATABASE_TYPE}}
+host = {{DATABASE_HOST}}
+name = {{DATABASE_NAME}}
+user = {{DATABASE_USER}}
 # If the password contains # or ; you have to wrap it with triple quotes. Ex """#password;"""
-;password =
+password = {{DATABASE_PASSWORD}}
 
 # Use either URL or the previous fields to configure the database
 # Example: mysql://user:secret@host:port/database
