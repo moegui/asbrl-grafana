@@ -9,10 +9,10 @@
     src: ./files/
     dest: /home/{{default_user}}/grafana
 
-- name: Grafana Data Volume
-  docker_volume:
-    name: grafana_data
-    state: present
+# - name: Grafana Data Volume
+#   docker_volume:
+#     name: grafana_data
+#     state: present
 
 - name: Grafana config file
   template:
@@ -46,4 +46,4 @@
       - /home/{{default_user}}/grafana/provisioning/dashboards/:/etc/grafana/provisioning/dashboards
       - /home/{{default_user}}/grafana/provisioning/config-datasource.yml:/etc/grafana/provisioning/datasources/config-datasource.yml
       - /home/{{default_user}}/grafana/provisioning/config-dashboard.yml:/etc/grafana/provisioning/dashboards/config-dashboard.yml
-      - grafana_data:/var/lib/grafana
+      # - grafana_data:/var/lib/grafana
