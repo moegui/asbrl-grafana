@@ -47,3 +47,5 @@
       - /home/{{default_user}}/grafana/provisioning/config-datasource.yml:/etc/grafana/provisioning/datasources/config-datasource.yml
       - /home/{{default_user}}/grafana/provisioning/config-dashboard.yml:/etc/grafana/provisioning/dashboards/config-dashboard.yml
       # - grafana_data:/var/lib/grafana
+    labels: 
+      "{{ DOCKER_LABELS }}"
