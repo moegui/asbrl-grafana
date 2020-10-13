@@ -1,5 +1,5 @@
 default_user: 'ubuntu'
-PLUGIN: ''
+PLUGIN: 'grafana-piechart-panel'
 ROOT_URL: 'http://localhost/'
 ADMIN_PASS: 'Pa$$w0rd'
 SMTP_HOST: ''
