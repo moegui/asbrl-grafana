@@ -1,13 +1,13 @@
 ---
 - name: Create Grafana directory
   file:
-    path: /home/{{default_user}}/grafana/
+    path: /home/{{default_user}}/{{ CONTAINER_NAME }}/
     state: directory  
 
 - name: Copy Grafana dashboards
   copy:
     src: ./files/
-    dest: /home/{{default_user}}/grafana
+    dest: /home/{{default_user}}/{{ CONTAINER_NAME }}
 
 # - name: Grafana Data Volume
 #   docker_volume:
@@ -17,35 +17,38 @@
 - name: Grafana config file
   template:
     src: grafana.ini.j2
-    dest: /home/{{default_user}}/grafana/grafana.ini       
+    dest: /home/{{default_user}}/{{ CONTAINER_NAME }}/grafana.ini       
 
 - name: Grafana config datasource file
   template:
     src: config-datasource.yml.j2
-    dest: /home/{{default_user}}/grafana/provisioning/config-datasource.yml 
+    dest: /home/{{default_user}}/{{ CONTAINER_NAME }}/provisioning/config-datasource.yml 
 
 - name: Grafana config dashboard file
   template:
     src: config-dashboard.yml.j2
-    dest: /home/{{default_user}}/grafana/provisioning/config-dashboard.yml
+    dest: /home/{{default_user}}/{{ CONTAINER_NAME }}/provisioning/config-dashboard.yml
 
 - name: Grafana
   docker_container:
-    name: "grafana"
+    name: "{{ CONTAINER_NAME }}"
     image: "{{ IMAGE }}:{{ BUILD }}"
     pull: "true"
     env:
-      GF_INSTALL_PLUGINS: "{{ PLUGIN }}"    
+      GF_INSTALL_PLUGINS: "{{ PLUGIN }}"
+    cpu_period: "{{ DOCKER_CPU_PERIOD }}"
+    cpu_quota: "{{ DOCKER_CPU_QUOTA }}"
+    memory: "{{ DOCKER_MEMORY }}"
+    state: "{{ CONTAINER_STATE }}"
     recreate: "yes"
-    state: "started"
     restart_policy: "unless-stopped"
     published_ports:
         - "0.0.0.0:3000:3000"
     volumes:
-      - /home/{{default_user}}/grafana/grafana.ini:/etc/grafana/grafana.ini
-      - /home/{{default_user}}/grafana/provisioning/dashboards/:/etc/grafana/provisioning/dashboards
-      - /home/{{default_user}}/grafana/provisioning/config-datasource.yml:/etc/grafana/provisioning/datasources/config-datasource.yml
-      - /home/{{default_user}}/grafana/provisioning/config-dashboard.yml:/etc/grafana/provisioning/dashboards/config-dashboard.yml
+      - /home/{{default_user}}/{{ CONTAINER_NAME }}/grafana.ini:/etc/grafana/grafana.ini
+      - /home/{{default_user}}/{{ CONTAINER_NAME }}/provisioning/dashboards/:/etc/grafana/provisioning/dashboards
+      - /home/{{default_user}}/{{ CONTAINER_NAME }}/provisioning/config-datasource.yml:/etc/grafana/provisioning/datasources/config-datasource.yml
+      - /home/{{default_user}}/{{ CONTAINER_NAME }}/provisioning/config-dashboard.yml:/etc/grafana/provisioning/dashboards/config-dashboard.yml
       # - grafana_data:/var/lib/grafana
     labels: 
       "{{ DOCKER_LABELS }}"
