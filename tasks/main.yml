@@ -42,13 +42,12 @@
     state: "{{ CONTAINER_STATE }}"
     recreate: "yes"
     restart_policy: "unless-stopped"
-    published_ports:
-        - "0.0.0.0:3000:3000"
+    published_ports: "{{ DOCKER_PUBLISHED_PORTS | default(omit) }}"
+    exposed_ports: "{{ DOCKER_EXPOSED_PORTS | default(omit) }}"
     volumes:
       - /home/{{default_user}}/{{ CONTAINER_NAME }}/grafana.ini:/etc/grafana/grafana.ini
       - /home/{{default_user}}/{{ CONTAINER_NAME }}/provisioning/dashboards/:/etc/grafana/provisioning/dashboards
       - /home/{{default_user}}/{{ CONTAINER_NAME }}/provisioning/config-datasource.yml:/etc/grafana/provisioning/datasources/config-datasource.yml
       - /home/{{default_user}}/{{ CONTAINER_NAME }}/provisioning/config-dashboard.yml:/etc/grafana/provisioning/dashboards/config-dashboard.yml
       # - grafana_data:/var/lib/grafana
-    labels: 
-      "{{ DOCKER_LABELS }}"
+    labels: "{{ DOCKER_LABELS | default(omit) }}"
