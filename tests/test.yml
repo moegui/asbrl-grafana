@@ -1,5 +1,24 @@
 ---
-- hosts: localhost
-  remote_user: root
-  roles:
-    - asbrl-grafana/
+- name: Deploy
+  hosts: localhost
+  order: sorted
+  become: true
+
+  pre_tasks:
+
+  - name: copy role locally (DEBUG)
+    copy:
+      src: ../
+      dest: ./roles/asbrl-grafana
+  
+  tasks:
+
+  - name: Deploy Grafana
+    include_role:
+      name: asbrl-grafana
+    vars:
+      ADMIN_PASS: 'Pa$$w0rd'
+      DOCKER_CPU_QUOTA: 100000
+      DOCKER_MEMORY: 1G
+    tags:
+      - mongo

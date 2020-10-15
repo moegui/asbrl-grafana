@@ -23,6 +23,13 @@ Role Variables
 - BUILD: '7.1.5'
 - IMAGE: 'grafana/grafana'
 - PROMETHEUS_URL: 'http://localhost:9090'
+- DOCKER_LABELS:
+    tag1: test
+- CONTAINER_NAME: "grafana"
+- DOCKER_CPU_PERIOD: 0
+- DOCKER_CPU_QUOTA: 0
+- DOCKER_MEMORY: 0
+- CONTAINER_STATE: 'started'
 
 Dependencies
 ------------
@@ -37,7 +44,7 @@ Example Playbook
           name: asbrl-grafana
         vars:
           PROMETHEUS_URL: 'http://172.17.0.1:9090'
-          ADMIN_PASS: '{{ GRAFANA_ADMIN_PASS }}'
+          ADMIN_PASS: Pa$$w0rd'
         tags:
           - grafana
 License

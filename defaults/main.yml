@@ -1,19 +1,8 @@
 default_user: 'ubuntu'
-PLUGIN: 'grafana-piechart-panel'
-ROOT_URL: 'http://localhost/'
-ADMIN_PASS: 'Pa$$w0rd'
-SMTP_HOST: ''
-SMTP_USER: ''
-STMP_PASS: ''
-SMTP_FROM_ADDRESS: ''
-SMTP_FROM: ''
-BUILD: '7.1.5'
-IMAGE: 'grafana/grafana'
-PROMETHEUS_URL: 'http://localhost:9090'
-DATABASE_TYPE: 'sqlite3'
-DATABASE_HOST: '127.0.0.1:3306'
-DATABASE_NAME: 'grafana'
-DATABASE_USER: 'root'
-DATABASE_PASSWORD: ''
 DOCKER_LABELS:
   tag1: test
+CONTAINER_NAME: "grafana"
+DOCKER_CPU_PERIOD: 0
+DOCKER_CPU_QUOTA: 0
+DOCKER_MEMORY: 0
+CONTAINER_STATE: 'started'
