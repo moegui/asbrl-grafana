@@ -9,7 +9,7 @@
   - name: copy role locally (DEBUG)
     copy:
       src: ../
-      dest: ./roles/asbrl-grafana
+      dest: /etc/ansible/roles/asbrl-grafana
   
   tasks:
 
@@ -20,5 +20,8 @@
       ADMIN_PASS: 'Pa$$w0rd'
       DOCKER_CPU_QUOTA: 100000
       DOCKER_MEMORY: 1G
+      DOCKER_LABELS:
+        tag1: test
+        tag2: test
     tags:
       - grafana

@@ -30,6 +30,10 @@ Role Variables
 - DOCKER_CPU_QUOTA: 0
 - DOCKER_MEMORY: 0
 - CONTAINER_STATE: 'started'
+- DOCKER_PUBLISHED_PORTS:
+  - "3000:3000"
+- DOCKER_EXPOSED_PORTS:
+  - "3000"
 
 Dependencies
 ------------
