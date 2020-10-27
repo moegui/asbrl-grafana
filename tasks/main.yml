@@ -1,13 +1,15 @@
 ---
 - name: Create Grafana directory
   file:
-    path: /home/{{default_user}}/{{ CONTAINER_NAME }}/
-    state: directory  
+    path: /home/{{ default_user }}/{{ CONTAINER_NAME }}/
+    state: directory
+    mode: 0644
 
 - name: Copy Grafana dashboards
   copy:
     src: ./files/
-    dest: /home/{{default_user}}/{{ CONTAINER_NAME }}
+    dest: /home/{{ default_user }}/{{ CONTAINER_NAME }}
+    mode: 0644
 
 # - name: Grafana Data Volume
 #   docker_volume:
@@ -17,17 +19,20 @@
 - name: Grafana config file
   template:
     src: grafana.ini.j2
-    dest: /home/{{default_user}}/{{ CONTAINER_NAME }}/grafana.ini       
+    dest: /home/{{ default_user }}/{{ CONTAINER_NAME }}/grafana.ini
+    mode: 0644
 
 - name: Grafana config datasource file
   template:
     src: config-datasource.yml.j2
-    dest: /home/{{default_user}}/{{ CONTAINER_NAME }}/provisioning/config-datasource.yml 
+    dest: /home/{{ default_user }}/{{ CONTAINER_NAME }}/provisioning/config-datasource.yml
+    mode: 0644
 
 - name: Grafana config dashboard file
   template:
     src: config-dashboard.yml.j2
-    dest: /home/{{default_user}}/{{ CONTAINER_NAME }}/provisioning/config-dashboard.yml
+    dest: /home/{{ default_user }}/{{ CONTAINER_NAME }}/provisioning/config-dashboard.yml
+    mode: 0644
 
 - name: Grafana
   docker_container:
@@ -45,9 +50,9 @@
     published_ports: "{{ DOCKER_PUBLISHED_PORTS | default(omit) }}"
     exposed_ports: "{{ DOCKER_EXPOSED_PORTS | default(omit) }}"
     volumes:
-      - /home/{{default_user}}/{{ CONTAINER_NAME }}/grafana.ini:/etc/grafana/grafana.ini
-      - /home/{{default_user}}/{{ CONTAINER_NAME }}/provisioning/dashboards/:/etc/grafana/provisioning/dashboards
-      - /home/{{default_user}}/{{ CONTAINER_NAME }}/provisioning/config-datasource.yml:/etc/grafana/provisioning/datasources/config-datasource.yml
-      - /home/{{default_user}}/{{ CONTAINER_NAME }}/provisioning/config-dashboard.yml:/etc/grafana/provisioning/dashboards/config-dashboard.yml
+      - /home/{{ default_user }}/{{ CONTAINER_NAME }}/grafana.ini:/etc/grafana/grafana.ini
+      - /home/{{ default_user }}/{{ CONTAINER_NAME }}/provisioning/dashboards/:/etc/grafana/provisioning/dashboards
+      - /home/{{ default_user }}/{{ CONTAINER_NAME }}/provisioning/config-datasource.yml:/etc/grafana/provisioning/datasources/config-datasource.yml
+      - /home/{{ default_user }}/{{ CONTAINER_NAME }}/provisioning/config-dashboard.yml:/etc/grafana/provisioning/dashboards/config-dashboard.yml
       # - grafana_data:/var/lib/grafana
     labels: "{{ DOCKER_LABELS | default(omit) }}"
