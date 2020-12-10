@@ -3,36 +3,41 @@
   file:
     path: /home/{{ default_user }}/{{ CONTAINER_NAME }}/
     state: directory
-    mode: 0644
+    mode: 0755
+  tags:
+  - asbrl-grafana
 
 - name: Copy Grafana dashboards
   copy:
     src: ./files/
     dest: /home/{{ default_user }}/{{ CONTAINER_NAME }}
     mode: 0644
-
-# - name: Grafana Data Volume
-#   docker_volume:
-#     name: grafana_data
-#     state: present
+  tags:
+  - asbrl-grafana
 
 - name: Grafana config file
   template:
     src: grafana.ini.j2
     dest: /home/{{ default_user }}/{{ CONTAINER_NAME }}/grafana.ini
     mode: 0644
+  tags:
+  - asbrl-grafana
 
 - name: Grafana config datasource file
   template:
     src: config-datasource.yml.j2
     dest: /home/{{ default_user }}/{{ CONTAINER_NAME }}/provisioning/config-datasource.yml
     mode: 0644
+  tags:
+  - asbrl-grafana
 
 - name: Grafana config dashboard file
   template:
     src: config-dashboard.yml.j2
     dest: /home/{{ default_user }}/{{ CONTAINER_NAME }}/provisioning/config-dashboard.yml
     mode: 0644
+  tags:
+  - asbrl-grafana
 
 - name: Grafana
   docker_container:
@@ -56,3 +61,5 @@
       - /home/{{ default_user }}/{{ CONTAINER_NAME }}/provisioning/config-dashboard.yml:/etc/grafana/provisioning/dashboards/config-dashboard.yml
       # - grafana_data:/var/lib/grafana
     labels: "{{ DOCKER_LABELS | default(omit) }}"
+  tags:
+  - asbrl-grafana
